@@ -9,7 +9,7 @@ const LogInPage = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm();
 
   const handleLogin = async (data) => {
@@ -33,19 +33,24 @@ const LogInPage = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
-      <div className="w-full max-w-md rounded-lg border border-gray-200 bg-white p-8 shadow-sm">
-        <h2 className="mb-6 text-center text-3xl font-bold text-gray-700">
-          Login your account
-        </h2>
+    <section className="min-h-screen bg-gradient-to-br from-gray-100 via-white to-gray-200 px-4 py-10 flex items-center justify-center">
+      <div className="w-full max-w-[420px] rounded-3xl border border-gray-200 bg-white/90 p-6 shadow-xl backdrop-blur-sm sm:p-8 md:p-10">
+        {/* Header */}
+        <div className="mb-8 text-center">
+          <h2 className="text-2xl font-bold text-gray-800 sm:text-3xl">
+            Login Your Account
+          </h2>
+          <p className="mt-2 text-sm text-gray-500">
+            Welcome back! Please enter your details.
+          </p>
+        </div>
 
-        <hr className="mb-6" />
-
-        <form onSubmit={handleSubmit(handleLogin)} className="space-y-4">
+        {/* Form */}
+        <form onSubmit={handleSubmit(handleLogin)} className="space-y-5">
           {/* Email */}
           <div>
-            <label className="mb-2 block font-medium text-gray-700">
-              Email address
+            <label className="mb-2 block text-sm font-semibold text-gray-700">
+              Email Address
             </label>
 
             <input
@@ -53,12 +58,16 @@ const LogInPage = () => {
                 required: "Email is required",
               })}
               type="email"
-              placeholder="Enter your email address"
-              className="w-full rounded-md bg-gray-100 px-4 py-3 outline-none focus:ring-2 focus:ring-gray-300"
+              placeholder="Enter your email"
+              className={`w-full rounded-xl border bg-gray-50 px-4 py-3 text-sm text-gray-800 outline-none transition focus:bg-white focus:ring-2 ${
+                errors.email
+                  ? "border-red-400 focus:ring-red-200"
+                  : "border-gray-200 focus:border-gray-400 focus:ring-gray-200"
+              }`}
             />
 
             {errors.email && (
-              <p className="mt-2 text-sm text-red-500">
+              <p className="mt-2 text-sm font-medium text-red-500">
                 {errors.email.message}
               </p>
             )}
@@ -66,7 +75,7 @@ const LogInPage = () => {
 
           {/* Password */}
           <div>
-            <label className="mb-2 block font-medium text-gray-700">
+            <label className="mb-2 block text-sm font-semibold text-gray-700">
               Password
             </label>
 
@@ -76,32 +85,42 @@ const LogInPage = () => {
               })}
               type="password"
               placeholder="Enter your password"
-              className="w-full rounded-md bg-gray-100 px-4 py-3 outline-none focus:ring-2 focus:ring-gray-300"
+              className={`w-full rounded-xl border bg-gray-50 px-4 py-3 text-sm text-gray-800 outline-none transition focus:bg-white focus:ring-2 ${
+                errors.password
+                  ? "border-red-400 focus:ring-red-200"
+                  : "border-gray-200 focus:border-gray-400 focus:ring-gray-200"
+              }`}
             />
 
             {errors.password && (
-              <p className="mt-2 text-sm text-red-500">
+              <p className="mt-2 text-sm font-medium text-red-500">
                 {errors.password.message}
               </p>
             )}
           </div>
 
+          {/* Button */}
           <button
             type="submit"
-            className="w-full rounded-md bg-gray-700 py-3 font-semibold text-white transition hover:bg-gray-800"
+            disabled={isSubmitting}
+            className="w-full rounded-xl bg-gray-800 py-3 text-sm font-bold text-white shadow-md transition hover:bg-black disabled:cursor-not-allowed disabled:bg-gray-400"
           >
-            Login
+            {isSubmitting ? "Logging in..." : "Login"}
           </button>
         </form>
 
-        <p className="mt-5 text-center text-sm text-gray-500">
+        {/* Footer */}
+        <p className="mt-6 text-center text-sm text-gray-500">
           Don’t have an account?{" "}
-          <Link href="/register" className="font-semibold text-red-500">
+          <Link
+            href="/register"
+            className="font-bold text-red-500 transition hover:text-red-600 hover:underline"
+          >
             Register
           </Link>
         </p>
       </div>
-    </div>
+    </section>
   );
 };
 

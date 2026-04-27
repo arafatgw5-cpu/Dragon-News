@@ -31,19 +31,22 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className="w-full bg-gray-100 sticky top-0 z-10">
-      <div className="mx-auto grid max-w-7xl grid-cols-3 items-center px-4 py-3">
-        <div></div>
+    <nav className="sticky top-0 z-50 w-full bg-gray-100">
+      <div className="mx-auto flex max-w-7xl flex-col gap-4 px-4 py-3 sm:flex-row sm:items-center sm:justify-between">
+        
+        {/* Logo / Empty Left */}
+        <div className="hidden sm:block sm:w-32"></div>
 
-        <div className="flex justify-center gap-7 text-sm font-medium">
+        {/* Menu Links */}
+        <div className="flex flex-wrap items-center justify-center gap-5 text-sm font-medium sm:gap-7">
           {links.map((link) => (
             <Link
               key={link.href}
               href={link.href}
-              className={`pb-1 ${
+              className={`pb-1 transition ${
                 pathname === link.href
                   ? "border-b-2 border-black font-semibold text-black"
-                  : "text-gray-700"
+                  : "text-gray-700 hover:text-black"
               }`}
             >
               {link.label}
@@ -51,8 +54,9 @@ const Navbar = () => {
           ))}
         </div>
 
-        <div className="flex justify-end items-center gap-3">
-          {isPending ? null : (
+        {/* User + Login/Logout */}
+        <div className="flex items-center justify-center gap-3 sm:justify-end sm:w-32">
+          {!isPending && (
             <>
               <div className="h-8 w-8 overflow-hidden rounded-full border border-gray-500 bg-white">
                 <Image
@@ -67,13 +71,13 @@ const Navbar = () => {
               {loggedInUser ? (
                 <button
                   onClick={handleLogout}
-                  className="bg-red-600 px-6 py-2 text-sm font-semibold text-white"
+                  className="rounded-md bg-red-600 px-5 py-2 text-sm font-semibold text-white hover:bg-red-700"
                 >
                   Logout
                 </button>
               ) : (
                 <Link href="/login">
-                  <button className="bg-gray-800 px-6 py-2 text-sm font-semibold text-white">
+                  <button className="rounded-md bg-gray-800 px-5 py-2 text-sm font-semibold text-white hover:bg-gray-900">
                     Login
                   </button>
                 </Link>
